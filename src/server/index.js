@@ -1,43 +1,49 @@
-let path = require("path");
+const path = require("path");
 const express = require("express");
-
+const axios = require("axios");
+const cors = require("cors");
+const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 
-const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
 
-const cors = require("cors");
-
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static("dist"));
-console.log(__dirname);
 
-// Variables for url and api key
-let MeaningCloud = require('meaning-cloud');
+const testResponse = require("./testapi.js");
 
-let meaning = MeaningCloud({
-    key: process.env.API_KEY, // API Key. Required.
-    secure: true   ,          // HTTPS or HTTPS. Optional, true by default.
-    uri: 'custom-uri',        // URI to create the API endpoints. Optional.
-  });
-
-console.log(`Your API key is ${process.env.API_KEY}`);
+const meaningCloudApiKey = process.env.MEANINGCLOUD_API_KEY;
+const meaningCloudApiUrl = "https://api.meaningcloud.com/sentiment-2.1";
+let userInput = [];
 
 app.get("/", function (req, res) {
-  res.send(
-    "This is the server API page, you may access its services via the client app."
-  );
+  //res.sendFile('dist/index.html')
+  res.sendFile(path.resolve("src/client/views/index.html"));
 });
-app.get("/", function (req, res) {
-  res.sendFile("dist/index.html");
+app.get("/test", function (req, res) {
+  res.send(testResponse);
 });
-
 // POST Route
 
-// Designates what port the app will listen to for incoming requests
-app.listen(8000, function () {
-  console.log("Example app listening on port 8000!");
+app.post("/api/analyze", async (req, res) => {
+  console.log("from 8001", req, res);
+
+  const userInput = req.body.url;
+  console.log(`Received URL: ${userInput}`);
+
+  const apiRequestUrl = `${meaningCloudApiUrl}?key=${meaningCloudApiKey}&url=${userInput}&lang=en`;
+
+  const response = await axios.get(apiRequestUrl);
+  const analysisData = response.data;
+
+  console.log(analysisData);
+  res.json(analysisData);
+});
+
+const port = 8001;
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}!`);
 });

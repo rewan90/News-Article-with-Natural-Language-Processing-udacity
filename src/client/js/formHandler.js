@@ -1,30 +1,58 @@
-// Replace checkForName with a function that checks the URL
-import { checkForName } from './nameChecker'
+import axios from 'axios';
+import { isValidURL } from './urlValidator';
 
-// If working on Udacity workspace, update this with the Server API URL e.g. `https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api`
-// const serverURL = 'https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api'
-const serverURL = 'https://localhost:8000/api'
+// Replace with the server URL
+const serverURL = 'http://localhost:8001';
+const form = document.getElementById('url-form');
+const urlInput = document.getElementById('url');
 
-const form = document.getElementById('urlForm');
-form.addEventListener('submit', handleSubmit);
-
-function handleSubmit(event) {
-    event.preventDefault();
-
-    // Get the URL from the input field
-    const formText = document.getElementById('name').value;
-
-    // This is an example code that checks the submitted name. You may remove it from your code
-    checkForName(formText);
-    
-    // Check if the URL is valid
- 
-        // If the URL is valid, send it to the server using the serverURL constant above
-      
+if (form && urlInput) {
+  form.addEventListener('submit', handleSubmit);
+} else {
+  console.error('Form or URL input element not found');
 }
 
-// Function to send data to the server
+function handleSubmit(event) {
+  event.preventDefault();
+  const url = urlInput.value;
 
-// Export the handleSubmit function
+  if (isValidURL(url)) {
+    console.log("::: Form Submitted :::", url);
+    sendPostRequest(serverURL + '/api/analyze', { url })
+      .then((response) => {
+        updateUI(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    alert('Seems like an invalid URL, please try with a valid URL.');
+  }
+}
+
+
+export function sendPostRequest(url, data) {
+  console.log(url, data);
+  return axios.post(url, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function updateUI(data) {
+  const subjectivity = data.subjectivity;
+  const agreement = data.agreement;
+  const confidence = data.confidence;
+  const irony = data.irony;
+
+  document.getElementById('subjectivity').innerHTML = `Subjectivity: ${subjectivity}`;
+  document.getElementById('agreement').innerHTML = `Agreement: ${agreement}`;
+  document.getElementById('confidence').innerHTML = `Confidence: ${confidence}`;
+  document.getElementById('irony').innerHTML = `Irony: ${irony}`;
+}
+
+
 export { handleSubmit };
-

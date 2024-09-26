@@ -1,39 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Test</title>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NLP Analysis Tool</title>
+</head>
+<body>
+  <header>
+    <h1>NLP Analysis Tool</h1>
+  </header>
+  <main>
+    <form id="url-form">
+      <label for="url">Enter URL:</label>
+      <input type="url" id="url" required>
+      <button type="submit">Analyze</button>
 
-    <body>
+    </form>
+    <section>
+      <strong>Form Results:</strong>
+      <div id="score-tag"></div>
+      <div id="agreement"></div>
+      <div id="subjectivity"></div>
+      <div id="confidence"></div>
+      <div id="irony"></div>
+  </section>
 
-        <header>
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
-
-        <main>
-            <section>
-                <form id="urlForm">
-                    <input id="name" type="text" name="url" placeholder="Enter URL" required>
-                    <button id="submitButton" type="submit">Submit</button>
-                </form>
-                
-            </section>
-
-            <section>
-                <strong>Form Results:</strong>
-                <div id="results"></div>
-            </section>
-        </main>
-
-        <footer>
-            <p>This is a footer</p>
-        </footer>
-
-    </body>
+  </main>
+</body>
 </html>
