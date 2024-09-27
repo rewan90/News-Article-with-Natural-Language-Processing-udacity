@@ -1,13 +1,83 @@
-body {
-    display: flex;
-    flex-direction: column;
+@import 'Variables';
+// Global Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+  color: $text-color;
+  line-height: 1.6;
+}
+
+
 
 main {
-    flex: 2;
+  max-width: 800px;
+  margin: 2em auto;
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
+// section {
+//   margin-bottom: 1em;
+
+//   h2 {
+//     display: block;
+//     margin-bottom: 0.5em;
+//     font-size: 1.5em;
+//     font-weight: bold;
+//   }
+
+//   p {
+//     margin-bottom: 0.5em;
+//   }
+// }
 section {
-    max-width: 800px;
-    margin: 50px auto;
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-top: 0;
+    color: $primary-color;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  #polarity,
+  #subjectivity,
+  #text,
+  #agreement,
+  #confidence,
+  #irony,
+  #model {
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  div {
+    margin-top: 1em;
+    padding: 1em;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+
+    p {
+      margin-bottom: 0.5em;
+    }
+  }
 }

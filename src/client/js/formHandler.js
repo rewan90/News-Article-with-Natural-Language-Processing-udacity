@@ -43,15 +43,25 @@ export function sendPostRequest(url, data) {
 }
 
 function updateUI(data) {
-  const subjectivity = data.subjectivity;
+  const polarity = data.score_tag === 'P' ? 'positive' : 'negative';
+  const subjectivity = data.subjectivity === 'OBJECTIVE' ? 'factual' : 'subjective';
+  const text = data.sentence_list[0].text; // Display the text of the first sentence
   const agreement = data.agreement;
   const confidence = data.confidence;
   const irony = data.irony;
 
+  document.getElementById('polarity').innerHTML = `Polarity: ${polarity}`;
   document.getElementById('subjectivity').innerHTML = `Subjectivity: ${subjectivity}`;
+  document.getElementById('text').innerHTML = `Text: ${text}`;
   document.getElementById('agreement').innerHTML = `Agreement: ${agreement}`;
   document.getElementById('confidence').innerHTML = `Confidence: ${confidence}`;
   document.getElementById('irony').innerHTML = `Irony: ${irony}`;
+  
+  const sentimentedConceptList = data.sentimented_concept_list;
+  const sentimentedConceptListHtml = sentimentedConceptList.map((concept) => {
+    return `<p>Concept: ${concept.form} (ID: ${concept.id})</p>`;
+  }).join('');
+  document.getElementById('sentimented-concept-list').innerHTML = sentimentedConceptListHtml;
 }
 
 

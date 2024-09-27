@@ -11,20 +11,45 @@
   </header>
   <main>
     <form id="url-form">
-      <label for="url">Enter URL:</label>
+      <label for="url"><h2>Enter URL:</h2></label>
       <input type="url" id="url" required>
       <button type="submit">Analyze</button>
 
     </form>
     <section>
-      <strong>Form Results:</strong>
-      <div id="score-tag"></div>
-      <div id="agreement"></div>
-      <div id="subjectivity"></div>
-      <div id="confidence"></div>
-      <div id="irony"></div>
+      <h2>Form Results:</h2>
+      <div>
+        <p id="polarity"></p>
+      <p id="subjectivity"></p>
+      <p id="text"></p>
+      <p id="agreement"></p>
+      <p id="confidence"></p>
+      <p id="irony"></p>
+      <p id="model"></p>
+      </div>
+      
+      <h2>Sentimented Concept List:</h2>
+  <div id="sentimented-concept-list"></div>
   </section>
 
   </main>
+  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+
+      .then((registration) => {
+        if (registration) {
+          console.log('Service worker registered:', registration);
+        } else {
+          console.error('Service worker registration failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Service worker registration error:', error);
+      });
+  });
+}
+  </script>
 </body>
 </html>
